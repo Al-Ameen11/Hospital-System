@@ -1,42 +1,39 @@
 <?php include 'includes/header.php'; ?>
 <?php include 'includes/db.php'; ?>
 
-<h1 class="mb-3">Find a Doctor</h1>
-<form method="get" class="row g-2 mb-4">
-  <div class="col-md-4">
-    <input class="form-control" name="q" placeholder="Search by specialization or name" value="<?= isset($_GET['q'])?htmlspecialchars($_GET['q']):'' ?>">
-  </div>
-  <div class="col-auto"><button class="btn btn-primary">Search</button></div>
-</form>
-
-<div class="row">
-  <?php
-  $q = '';
-  if(!empty($_GET['q'])){
-    $q = esc($_GET['q']);
-    $sql = "SELECT * FROM doctors WHERE name LIKE '%$q%' OR specialization LIKE '%$q%'";
-  } else {
-    $sql = "SELECT * FROM doctors";
-  }
-  $res = $conn->query($sql);
-  if($res->num_rows>0){
-    while($d = $res->fetch_assoc()):
-  ?>
-  <div class="col-md-4">
-    <div class="card mb-3">
-      <div class="card-body">
-        <h5 class="card-title"><?=htmlspecialchars($d['name'])?></h5>
-        <p class="card-text">Specialization: <?=htmlspecialchars($d['specialization'])?></p>
-        <p class="card-text">Available: <?=htmlspecialchars($d['available_days'])?> | <?=htmlspecialchars($d['available_time'])?></p>
-        <a href="/hospital-system/pages/book_appointment.php?doctor_id=<?=$d['doctor_id']?>" class="btn btn-sm btn-primary">Book</a>
-      </div>
+<div class="rounded-xl bg-app-surface border border-app-border p-8 mb-6">
+  <div class="py-6">
+    <h1 class="text-3xl md:text-4xl font-bold text-white">Smart Healthcare, Seamless Appointments</h1>
+    <p class="mt-3 max-w-2xl text-gray-300">Find the right doctor, book appointments in seconds, and manage your healthcare effortlessly.</p>
+    <div class="mt-5 flex flex-wrap items-center gap-3">
+      <a href="/hospital-system/pages/register.php" class="inline-flex items-center justify-center rounded-md bg-app-primary px-5 py-3 text-white hover:bg-blue-400 transition-colors">Get Started</a>
+      <a href="/hospital-system/pages/book_appointment.php" class="inline-flex items-center justify-center rounded-md border border-gray-600 px-5 py-3 text-gray-100 hover:bg-gray-800 transition-colors">Book Appointment</a>
     </div>
   </div>
-  <?php
-    endwhile;
-  } else {
-    echo '<p class="text-muted">No doctors found.</p>';
-  }
-  ?>
 </div>
 
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 my-6">
+  <div class="rounded-lg border border-app-border bg-app-surface shadow-sm">
+    <div class="p-5">
+      <div class="text-3xl mb-2">🩺</div>
+      <h5 class="text-lg font-semibold text-white">Expert Doctors</h5>
+      <p class="text-gray-300">Browse verified specialists with up-to-date availability.</p>
+    </div>
+  </div>
+  <div class="rounded-lg border border-app-border bg-app-surface shadow-sm">
+    <div class="p-5">
+      <div class="text-3xl mb-2">⚡</div>
+      <h5 class="text-lg font-semibold text-white">Fast Booking</h5>
+      <p class="text-gray-300">Pick a date and time that fits your schedule—no calls needed.</p>
+    </div>
+  </div>
+  <div class="rounded-lg border border-app-border bg-app-surface shadow-sm">
+    <div class="p-5">
+      <div class="text-3xl mb-2">🔔</div>
+      <h5 class="text-lg font-semibold text-white">Status Updates</h5>
+      <p class="text-gray-300">Track approval status for every appointment request.</p>
+    </div>
+  </div>
+</div>
+
+<?php include 'includes/footer.php'; ?>
